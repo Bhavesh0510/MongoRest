@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/MongoRest.iml" filepath="$PROJECT_DIR$/.idea/MongoRest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MongoRestAPI/MongoRestAPI.iml" filepath="$PROJECT_DIR$/MongoRestAPI/MongoRestAPI.iml" />
+    </modules>
+  </component>
+</project>
