@@ -1,5 +1,6 @@
 package com.example.MongoRestAPI.controller;
 
+import com.example.MongoRestAPI.exception.ApiRequestException;
 import com.example.MongoRestAPI.models.Employee;
 import com.example.MongoRestAPI.repo.EmployeeRepo;
 import com.example.MongoRestAPI.service.impl.SequenceGeneratorService;
@@ -26,16 +27,25 @@ public class EmployeeController {
 
     @GetMapping("/getEmp")
     public List<Employee> getAllEmployee(){
-        return repo.findAll();
+        try {
+            return repo.findAll();
+        }
+        catch (ApiRequestException a){
+            throw new ApiRequestException("Oops cannot get all students with custom exception");
+        }
     }
 
     @GetMapping("/getEmp/{eid}")
     public String getEmployee(@PathVariable int eid){
-        if(repo.existsById(eid)){
-            return repo.findById(eid).toString();
+        try {
+            if (repo.existsById(eid)) {
+                return repo.findById(eid).toString();
+            } else {
+                return "Given ID is not presented in Database Records!!!";
+            }
         }
-        else{
-            return "Given ID is not presented in Database Records!!!";
+        catch (ApiRequestException a){
+            throw new ApiRequestException("Oops cannot get student with custom exception");
         }
     }
 
