@@ -1,4 +1,4 @@
-package com.example.MongoRestAPI;
+package com.example.MongoRestAPI.models;
 
 import lombok.Getter;
 import lombok.Setter;

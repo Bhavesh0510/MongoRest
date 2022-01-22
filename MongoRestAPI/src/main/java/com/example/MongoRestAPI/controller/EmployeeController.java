@@ -1,10 +1,12 @@
-package com.example.MongoRestAPI;
+package com.example.MongoRestAPI.controller;
 
+import com.example.MongoRestAPI.models.Employee;
+import com.example.MongoRestAPI.repo.EmployeeRepo;
+import com.example.MongoRestAPI.service.impl.SequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class EmployeeController {

@@ -1,8 +1,7 @@
-package com.example.MongoRestAPI;
+package com.example.MongoRestAPI.repo;
 
+import com.example.MongoRestAPI.models.Employee;
 import org.springframework.data.mongodb.repository.MongoRepository;
-
-import java.util.Optional;
 
 public interface EmployeeRepo extends MongoRepository<Employee, Integer> {
 }
