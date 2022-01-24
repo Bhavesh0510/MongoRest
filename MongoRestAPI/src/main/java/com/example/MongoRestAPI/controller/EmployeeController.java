@@ -19,10 +19,21 @@ public class EmployeeController {
     private SequenceGeneratorService sequenceGeneratorService;
 
     @PostMapping("/addEmp")
-    public String saveEmp(@RequestBody Employee emp){
+    public String saveEmp(@RequestBody Employee emp) {
+        try{
+            if(emp.getEname()==null || emp.getEname().length()==0 || emp.getEname().isEmpty()){
+                throw new Exception("Name can't be empty!!");
+            }
+            if(emp.getSalary()==0){
+                throw new Exception("Salary Can't be 0");
+            }
         emp.setEid(sequenceGeneratorService.generateSequence(Employee.SEQUENCE_NAME));
         repo.save(emp);
         return "Added Employee with id: " + emp.getEid();
+    }
+        catch (Exception e){
+            return e.getMessage();
+        }
     }
 
     @GetMapping("/getEmp")
@@ -61,8 +72,19 @@ public class EmployeeController {
     }
 
     @PutMapping(path = "/updateEmp", consumes = { "application/json" })
-    public Employee saveOrupdateEmployee(@RequestBody Employee emp) {
-        repo.save(emp);
-        return emp;
+    public String saveOrupdateEmployee(@RequestBody Employee emp) {
+        try {
+            if (emp.getEname() == null || emp.getEname().length() == 0 || emp.getEname().isEmpty()) {
+                throw new Exception("Name can't be empty!!");
+            }
+            if (emp.getSalary() == 0) {
+                throw new Exception("Salary Can't be 0");
+            }
+            repo.save(emp);
+            return "Updated Details Successfully for Employee with id" + emp.getEid();
+        }
+        catch (Exception e){
+            return e.getMessage();
+        }
     }
 }
