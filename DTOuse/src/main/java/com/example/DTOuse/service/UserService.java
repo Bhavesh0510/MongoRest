@@ -23,6 +23,7 @@ public class UserService {
 
     }
 
+
     private UserLocationDTO convertEntityToDto(User user){
         UserLocationDTO userLocationDTO = new UserLocationDTO();
         userLocationDTO.setUserId(user.getId());

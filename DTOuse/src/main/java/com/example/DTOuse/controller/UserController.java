@@ -4,6 +4,7 @@ import com.example.DTOuse.dto.UserLocationDTO;
 import com.example.DTOuse.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,4 +19,9 @@ public class UserController {
     public List<UserLocationDTO> getAllUsersLocation(){
         return userService.getAllUserLocation();
     }
+
+//    @GetMapping("/users-location/{id}")
+//    public List<UserLocationDTO> getUserLocation(@PathVariable long id){
+//        return userService.getUserLocation(id);
+//    }
 }

@@ -10,16 +10,15 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @Controller
 @ControllerAdvice
-public class AppExceptionHandler{
+public class AppExceptionHandler {
 
     @ExceptionHandler(value = NullPointerException.class)
-    public String handelNullPointerException(Model model){
-        model.addAttribute("errorMsg", "Some Problem Occured. Please Try Again After Sometime..!!");
-        return "error";
+    public ResponseEntity<Object> exception(NullPointerException exception) {
+        return new ResponseEntity<>("Name or salary can't be null!!",HttpStatus.BAD_REQUEST);
     }
+}
 
 //    @ExceptionHandler
 //    public <UserNotFoundException> ResponseEntity<Object> exceptionHandler(UserNotFoundException ex){
 //        return new ResponseEntity<Object>(ex.getMessage(), HttpStatus.NOT_FOUND);
 //    }
-}
