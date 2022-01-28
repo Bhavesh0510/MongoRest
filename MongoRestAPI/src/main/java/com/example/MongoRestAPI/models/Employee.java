@@ -13,11 +13,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "Employee")
 public class Employee {
 
-    @Transient
-    public static final String SEQUENCE_NAME="employee_sequence";
+//    @Transient
+//    public static final String SEQUENCE_NAME="employee_sequence";
 
     @Id
-    private int eid;
+    private String eid;
     private String ename;
     private double salary;
 }

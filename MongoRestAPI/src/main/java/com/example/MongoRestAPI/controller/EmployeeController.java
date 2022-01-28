@@ -27,7 +27,7 @@ public class EmployeeController {
             if(emp.getSalary()==0){
                 throw new Exception("Salary Can't be 0");
             }
-        emp.setEid(sequenceGeneratorService.generateSequence(Employee.SEQUENCE_NAME));
+        //emp.setEid(sequenceGeneratorService.generateSequence(Employee.SEQUENCE_NAME));
         repo.save(emp);
         return "Added Employee with id: " + emp.getEid();
     }
@@ -47,7 +47,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/getEmp/{eid}")
-    public String getEmployee(@PathVariable int eid){
+    public String getEmployee(@PathVariable String eid){
         try {
             if (repo.existsById(eid)) {
                 return repo.findById(eid).toString();
@@ -61,7 +61,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/deleteEmp/{eid}")
-    public String deleteEmp(@PathVariable int eid){
+    public String deleteEmp(@PathVariable String eid){
         if(repo.existsById(eid)) {
             repo.deleteById(eid);
             return "Record deleted for Employee with id: " + eid;
