@@ -4,13 +4,20 @@ import com.example.DTOuse.model.Location;
 import com.example.DTOuse.model.User;
 import com.example.DTOuse.repository.LocationRepo;
 import com.example.DTOuse.repository.UserRepo;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class DtOuseApplication{
+
+	@Bean
+	public ModelMapper modelMapper(){
+		return new ModelMapper();
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(DtOuseApplication.class, args);
