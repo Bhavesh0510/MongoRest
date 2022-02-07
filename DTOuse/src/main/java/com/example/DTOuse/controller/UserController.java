@@ -1,6 +1,7 @@
 package com.example.DTOuse.controller;
 
 import com.example.DTOuse.dto.UserLocationDTO;
+import com.example.DTOuse.model.User;
 import com.example.DTOuse.repository.LocationRepo;
 import com.example.DTOuse.repository.UserRepo;
 import com.example.DTOuse.service.UserService;
@@ -32,7 +33,10 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-
-
+    @DeleteMapping("/users-location/delete/{id}")
+    public ResponseEntity deleteUserLocation(@PathVariable String id){
+        return userService.deleteUser(id);
+    }
 
 }
+

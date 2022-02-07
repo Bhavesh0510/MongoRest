@@ -1,18 +1,18 @@
 package com.example.DTOuse.service;
 
 import com.example.DTOuse.dto.UserLocationDTO;
+import com.example.DTOuse.model.Location;
 import com.example.DTOuse.model.User;
+import com.example.DTOuse.repository.LocationRepo;
 import com.example.DTOuse.repository.UserRepo;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,7 +22,14 @@ public class UserService {
     private UserRepo userRepo;
 
     @Autowired
+    private LocationRepo locationRepo;
+
+    @Autowired
     private ModelMapper modelMapper;
+
+    public UserService(UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
 
 //    public UserService(UserRepo userRepo, ModelMapper mapper) {
 //        this.userRepo = userRepo;
@@ -46,6 +53,18 @@ public class UserService {
     }
 
 
+    public ResponseEntity deleteUser(String id){
+        if(userRepo.findById(id).isPresent()) {
+            userRepo.deleteById(id);
+            return new ResponseEntity("Deleted Successfully.", HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity("User not found or already deleted", HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+
     private UserLocationDTO convertEntityToDto(User user){
 
 //        UserLocationDTO userLocationDTO = new UserLocationDTO();
@@ -59,6 +78,8 @@ public class UserService {
         return modelMapper.map(user, UserLocationDTO.class);
 //        return userLocationDTO;
     }
+
+
 
 //    private UserLocationDTO convertEntityToDto2(User user){
 //        UserLocationDTO userLocationDTO = new UserLocationDTO();

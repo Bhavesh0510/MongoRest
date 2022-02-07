@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class DtOuseApplication{
+public class DtOuseApplication implements CommandLineRunner {
 
 	@Bean
 	public ModelMapper modelMapper(){
@@ -23,40 +23,45 @@ public class DtOuseApplication{
 		SpringApplication.run(DtOuseApplication.class, args);
 	}
 
-//	@Autowired
-//	private UserRepo userRepo;
-//
-//	@Autowired
-//	private LocationRepo locationRepo;
-//
-//	@Override
-//	public void run(String... args) throws Exception{
-//
-//		Location location = new Location();
-//		location.setPlace("Pune");
-//		location.setDescription("Pune is great place to live");
-//		location.setLongitude(40.5);
-//		location.setLatitude(30.6);
-//		locationRepo.save(location);
-//
-//		User user1 = new User();
-//		user1.setId(1);
-//		user1.setFirstName("Ramesh");
-//		user1.setLastName("Fadatare");
-//		user1.setEmail("ramesh@gmail.com");
-//		user1.setPassword("secret");
-//		user1.setLocation(location);
-//		userRepo.save(user1);
-//
-//		User user2 = new User();
-//		user2.setId(2);
-//		user2.setFirstName("John");
-//		user2.setLastName("Cena");
-//		user2.setEmail("john@gmail.com");
-//		user2.setPassword("secret2");
-//		user2.setLocation(location);
-//		userRepo.save(user2);
-//
-//
-//	}
+	@Autowired
+	private UserRepo userRepo;
+
+	@Autowired
+	private LocationRepo locationRepo;
+
+	@Override
+	public void run(String... args) throws Exception{
+
+		Location location1 = new Location();
+		location1.setPlace("Mumbai");
+		location1.setDescription("Mumbai Indians is best team in the world.");
+		location1.setLongitude(40.5);
+		location1.setLatitude(30.6);
+		locationRepo.save(location1);
+
+		Location location2 = new Location();
+		location2.setPlace("Banglore");
+		location2.setDescription("RCB is most famous team in the world.");
+		location2.setLongitude(35.5);
+		location2.setLatitude(20.6);
+		locationRepo.save(location2);
+
+		User user1 = new User();
+		user1.setFirstName("Rohit");
+		user1.setLastName("Sharma");
+		user1.setEmail("rohit@gmail.com");
+		user1.setPassword("ipltrophy");
+		user1.setLocation(location1);
+		userRepo.save(user1);
+
+		User user2 = new User();
+		user2.setFirstName("Virat");
+		user2.setLastName("Kohli");
+		user2.setEmail("virat@kohli.com");
+		user2.setPassword("noipltrophytilldate");
+		user2.setLocation(location2);
+		userRepo.save(user2);
+
+
+	}
 }
