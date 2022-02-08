@@ -1,5 +1,6 @@
 package com.example.DTOuse.service;
 
+import com.example.DTOuse.dto.AdditionDTO;
 import com.example.DTOuse.dto.UserLocationDTO;
 import com.example.DTOuse.model.Location;
 import com.example.DTOuse.model.User;
@@ -50,6 +51,60 @@ public class UserService {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(convertEntityToDto(user));
+    }
+
+    public ResponseEntity<Object> addUser(AdditionDTO additionDTO){
+        System.out.println(additionDTO.toString());
+        User user = new User();
+        Location location = new Location();
+        location.setPlace(additionDTO.getPlace());
+        location.setDescription(additionDTO.getDescription());
+        location.setLatitude(additionDTO.getLatitude());
+        location.setLongitude(additionDTO.getLongitude());
+        locationRepo.save(location);
+        System.out.println(location.toString());
+        Location location1 = locationRepo.findByPlace(additionDTO.getPlace());
+        user.setFirstName(additionDTO.getFirstname());
+        user.setLastName(additionDTO.getLastname());
+        user.setEmail(additionDTO.getEmail());
+        user.setPassword(additionDTO.getPassword());
+        user.setLocation(location1);
+        userRepo.save(user);
+        System.out.println(location1.toString());
+        System.out.println(user.toString());
+        return ResponseEntity.ok("User added");
+    }
+
+    public ResponseEntity<Object> updateUser(String id, AdditionDTO additionDTO){
+
+        User user1 = userRepo.findById(id).orElse(new User());
+
+        if(user1.getFirstName()==null){
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+        }
+        user1.setFirstName(additionDTO.getFirstname());
+        user1.setLastName(additionDTO.getLastname());
+        user1.setEmail(additionDTO.getEmail());
+        user1.setPassword(additionDTO.getPassword());
+        userRepo.save(user1);
+
+        return ResponseEntity.ok("User updated");
+    }
+
+    public ResponseEntity<Object> updateLocation(String place, AdditionDTO additionDTO){
+        Location location = locationRepo.findByPlace(place);
+
+        if(location==null){
+            return new ResponseEntity<>("Location not found", HttpStatus.NOT_FOUND);
+        }
+
+        location.setPlace(additionDTO.getPlace());
+        location.setDescription(additionDTO.getDescription());
+        location.setLatitude(additionDTO.getLatitude());
+        location.setLongitude(additionDTO.getLongitude());
+        locationRepo.save(location);
+
+        return ResponseEntity.ok("Location updated");
     }
 
 
