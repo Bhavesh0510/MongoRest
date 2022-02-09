@@ -36,7 +36,7 @@ class UserRepoTest {
     private UserController userController;
 
     @Test
-    void findById() {
+    public void findById() {
         Boolean actualResult = userRepo.existsById("6200fcf7c7247568df9c2837");
         assertThat(actualResult).isTrue();
     }
