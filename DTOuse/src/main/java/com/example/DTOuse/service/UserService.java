@@ -57,22 +57,29 @@ public class UserService {
         System.out.println(additionDTO.toString());
         User user = new User();
         Location location = new Location();
-        location.setPlace(additionDTO.getPlace());
-        location.setDescription(additionDTO.getDescription());
-        location.setLatitude(additionDTO.getLatitude());
-        location.setLongitude(additionDTO.getLongitude());
-        locationRepo.save(location);
-        System.out.println(location.toString());
-        Location location1 = locationRepo.findByPlace(additionDTO.getPlace());
-        user.setFirstName(additionDTO.getFirstname());
-        user.setLastName(additionDTO.getLastname());
-        user.setEmail(additionDTO.getEmail());
-        user.setPassword(additionDTO.getPassword());
-        user.setLocation(location1);
-        userRepo.save(user);
-        System.out.println(location1.toString());
-        System.out.println(user.toString());
-        return ResponseEntity.ok("User added");
+        if(locationRepo.findByPlace(additionDTO.getPlace())==null) {
+            location.setPlace(additionDTO.getPlace());
+            location.setDescription(additionDTO.getDescription());
+            location.setLatitude(additionDTO.getLatitude());
+            location.setLongitude(additionDTO.getLongitude());
+            locationRepo.save(location);
+            System.out.println(location.toString());
+        }
+        if (userRepo.findByEmail(additionDTO.getEmail())==null) {
+            Location location1 = locationRepo.findByPlace(additionDTO.getPlace());
+            user.setFirstName(additionDTO.getFirstname());
+            user.setLastName(additionDTO.getLastname());
+            user.setEmail(additionDTO.getEmail());
+            user.setPassword(additionDTO.getPassword());
+            user.setLocation(location1);
+            userRepo.save(user);
+            System.out.println(location1.toString());
+            System.out.println(user.toString());
+            return ResponseEntity.ok("User added");
+        }
+        else {
+            return new ResponseEntity("User already exists with given Email Id!!!", HttpStatus.BAD_REQUEST);
+        }
     }
 
     public ResponseEntity<Object> updateUser(String id, AdditionDTO additionDTO){
@@ -118,8 +125,6 @@ public class UserService {
         }
     }
 
-
-
     private UserLocationDTO convertEntityToDto(User user){
 
 //        UserLocationDTO userLocationDTO = new UserLocationDTO();
@@ -134,6 +139,15 @@ public class UserService {
 //        return userLocationDTO;
     }
 
+    public ResponseEntity deleteLocation(String place) {
+        if(locationRepo.findByPlace(place)!=null) {
+            locationRepo.deleteByPlace(place);
+            return new ResponseEntity("Deleted Successfully.", HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity("Location not found or already deleted", HttpStatus.NOT_FOUND);
+        }
+    }
 
 
 //    private UserLocationDTO convertEntityToDto2(User user){

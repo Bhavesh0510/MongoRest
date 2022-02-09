@@ -51,9 +51,6 @@ class UserRepoTest {
         assertEquals("Mumbai", userController.getAllUsersLocation().get(1).getPlace());
     }
 
-//    public void saveUserTest(){
-//    }
-
     @Test
     public void addUserTest() {
         AdditionDTO additionDTO = new AdditionDTO("abc", "xyz", "new@user.com", "123", "place", "desc", 23.33, 33.33);
@@ -83,7 +80,16 @@ class UserRepoTest {
     @Test
     public void deleteUserTest() {
         String id = "12bvvhbcjhhvxvvgxxvs7";
-        Boolean actualResult = userRepo.existsById(id);
-        assertThat(actualResult).isFalse();
+        when(userController.deleteUser(id)).thenReturn(ResponseEntity.ok(id));
+        assertEquals(id, userController.deleteUser(id).getBody());
+        assertEquals(200, userController.deleteUser(id).getStatusCodeValue());
+    }
+
+    @Test
+    public void deleteLocationTest() {
+        String place = "new place";
+        when(userController.deleteLocation(place)).thenReturn(ResponseEntity.ok(place));
+        assertEquals(place, userController.deleteLocation(place).getBody());
+        assertEquals(200, userController.deleteLocation(place).getStatusCodeValue());
     }
 }

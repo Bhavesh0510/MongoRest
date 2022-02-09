@@ -35,9 +35,14 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @DeleteMapping("/users-location/delete/{id}")
-    public ResponseEntity deleteUserLocation(@PathVariable String id){
+    @DeleteMapping("/users-location/delete-user/{id}")
+    public ResponseEntity deleteUser(@PathVariable String id){
         return userService.deleteUser(id);
+    }
+
+    @DeleteMapping("/users-location/delete-location/{place}")
+    public ResponseEntity deleteLocation(@PathVariable String place){
+        return userService.deleteLocation(place);
     }
 
     @PostMapping("/users-location/add")
