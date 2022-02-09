@@ -56,29 +56,34 @@ class UserRepoTest {
 
     @Test
     public void addUserTest() {
-        AdditionDTO customDTO = new AdditionDTO("abc", "xyz", "new@user.com", "123", "place", "desc", 23.33, 33.33);
-        when(userController.addUserAndLocation(customDTO)).thenReturn(ResponseEntity.ok(customDTO));
-        assertEquals(customDTO, userController.addUserAndLocation(customDTO).getBody());
-        assertEquals(200, userController.addUserAndLocation(customDTO).getStatusCodeValue());
+        AdditionDTO additionDTO = new AdditionDTO("abc", "xyz", "new@user.com", "123", "place", "desc", 23.33, 33.33);
+        when(userController.addUserAndLocation(additionDTO)).thenReturn(ResponseEntity.ok(additionDTO));
+        assertEquals(additionDTO, userController.addUserAndLocation(additionDTO).getBody());
+        assertEquals(200, userController.addUserAndLocation(additionDTO).getStatusCodeValue());
     }
 
     @Test
     public void updateUserTest() {
         String id = "12bvvhbcjhhvxvvgxxvs7";
-        AdditionDTO customDTO = new AdditionDTO("abc", "xyz", "modified email", "modified pass", null, null, 0.0, 0.0);
-        when(userController.updateUserAndLocation(customDTO, id)).thenReturn(ResponseEntity.ok(customDTO));
-        assertEquals(customDTO, userController.updateUserAndLocation(customDTO, id).getBody());
-        assertEquals(200, userController.updateUserAndLocation(customDTO, id).getStatusCodeValue());
+        AdditionDTO additionDTO = new AdditionDTO("abc", "xyz", "modified email", "modified pass", null, null, 0.0, 0.0);
+        when(userController.updateUserAndLocation(additionDTO, id)).thenReturn(ResponseEntity.ok(additionDTO));
+        assertEquals(additionDTO, userController.updateUserAndLocation(additionDTO, id).getBody());
+        assertEquals(200, userController.updateUserAndLocation(additionDTO, id).getStatusCodeValue());
     }
 
     @Test
     public void updateLocationTest() {
         String place = "new place";
-        AdditionDTO customDTO = new AdditionDTO(null, null, null, null, "new place", "new desc", 23.33, 33.33);
-        when(userController.updateUserLocation(customDTO, place)).thenReturn(ResponseEntity.ok(customDTO));
-        assertEquals(customDTO, userController.updateUserLocation(customDTO, place).getBody());
-        assertEquals(200, userController.updateUserLocation(customDTO, place).getStatusCodeValue());
+        AdditionDTO additionDTO = new AdditionDTO(null, null, null, null, "new place", "new desc", 23.33, 33.33);
+        when(userController.updateUserLocation(additionDTO, place)).thenReturn(ResponseEntity.ok(additionDTO));
+        assertEquals(additionDTO, userController.updateUserLocation(additionDTO, place).getBody());
+        assertEquals(200, userController.updateUserLocation(additionDTO, place).getStatusCodeValue());
+    }
 
-
+    @Test
+    public void deleteUserTest() {
+        String id = "12bvvhbcjhhvxvvgxxvs7";
+        Boolean actualResult = userRepo.existsById(id);
+        assertThat(actualResult).isFalse();
     }
 }
