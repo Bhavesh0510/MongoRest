@@ -3,7 +3,7 @@ package com.example.DTOuse.repo;
 import com.example.DTOuse.controller.UserController;
 import com.example.DTOuse.dto.AdditionDTO;
 import com.example.DTOuse.dto.UserLocationDTO;
-import com.example.DTOuse.model.User;
+//import com.example.DTOuse.model.User;
 import com.example.DTOuse.repository.UserRepo;
 import com.example.DTOuse.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -34,6 +34,28 @@ class UserRepoTest {
 
     @Autowired
     private UserController userController;
+
+    @Test
+    public void deleteUserTest_EmptyUserId() {
+        String id = "";
+        String obj = userController.deleteUser(id);
+        assertEquals("User id is empty", obj);
+    }
+
+    @Test
+    public void deleteUserTest_Success() {
+        String id = "1";
+        when(userService.deleteUser(id)).thenReturn("User deleted");
+        String obj = userController.deleteUser(id);
+        assertEquals("User deleted", obj);
+    }
+
+    @Test
+    public void deleteUserTest_NullUserId() {
+        String id = null;
+        String obj = userController.deleteUser(id);
+        assertEquals("User id can't be null", obj);
+    }
 
     @Test
     public void findById() {
@@ -77,13 +99,13 @@ class UserRepoTest {
         assertEquals(200, userController.updateUserLocation(additionDTO, place).getStatusCodeValue());
     }
 
-    @Test
-    public void deleteUserTest() {
-        String id = "12bvvhbcjhhvxvvgxxvs7";
-        when(userController.deleteUser(id)).thenReturn(ResponseEntity.ok(id));
-        assertEquals(id, userController.deleteUser(id).getBody());
-        assertEquals(200, userController.deleteUser(id).getStatusCodeValue());
-    }
+//    @Test
+//    public void deleteUserTest() {
+//        String id = "12bvvhbcjhhvxvvgxxvs7";
+//        when(userController.deleteUser(id)).thenReturn(ResponseEntity.ok(id));
+//        assertEquals(id, userController.deleteUser(id).getBody());
+//        assertEquals(200, userController.deleteUser(id).getStatusCodeValue());
+//    }
 
     @Test
     public void deleteLocationTest() {

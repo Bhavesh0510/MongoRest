@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class UserService {
 
     @Autowired
-    private UserRepo userRepo;
+    private final UserRepo userRepo;
 
     @Autowired
     private LocationRepo locationRepo;
@@ -31,7 +31,6 @@ public class UserService {
     public UserService(UserRepo userRepo) {
         this.userRepo = userRepo;
     }
-
 //    public UserService(UserRepo userRepo, ModelMapper mapper) {
 //        this.userRepo = userRepo;
 //        this.mapper = mapper;
@@ -42,7 +41,6 @@ public class UserService {
                 .stream()
                 .map(this::convertEntityToDto)
                 .collect(Collectors.toList());
-
     }
 
     public ResponseEntity<Object> getUserById(String id){
@@ -114,29 +112,26 @@ public class UserService {
         return ResponseEntity.ok("Location updated");
     }
 
-
-    public ResponseEntity deleteUser(String id){
+    public String deleteUser(String id){
         if(userRepo.findById(id).isPresent()) {
             userRepo.deleteById(id);
-            return new ResponseEntity("Deleted Successfully.", HttpStatus.OK);
+            return "Deleted Successfully.";
         }
         else {
-            return new ResponseEntity("User not found or already deleted", HttpStatus.NOT_FOUND);
+            return "User not found or already deleted";
         }
     }
 
     private UserLocationDTO convertEntityToDto(User user){
-
 //        UserLocationDTO userLocationDTO = new UserLocationDTO();
-//
 //        userLocationDTO.setUserId(user.getId());
 //        userLocationDTO.setEmail(user.getEmail());
 //        userLocationDTO.setPlace(user.getLocation().getPlace());
 //        userLocationDTO.setLongitude(user.getLocation().getLongitude());
 //        userLocationDTO.setLatitude(user.getLocation().getLatitude());
+//        return userLocationDTO;
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
         return modelMapper.map(user, UserLocationDTO.class);
-//        return userLocationDTO;
     }
 
     public ResponseEntity deleteLocation(String place) {
@@ -149,7 +144,6 @@ public class UserService {
         }
     }
 
-
 //    private UserLocationDTO convertEntityToDto2(User user){
 //        UserLocationDTO userLocationDTO = new UserLocationDTO();
 //        userLocationDTO.setUserId(user.getId());
@@ -159,5 +153,4 @@ public class UserService {
 //        userLocationDTO.setLatitude(user.getLocation().getLatitude());
 //        return userLocationDTO;
 //    }
-    
 }

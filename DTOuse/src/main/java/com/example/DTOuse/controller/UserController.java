@@ -36,7 +36,13 @@ public class UserController {
     }
 
     @DeleteMapping("/users-location/delete-user/{id}")
-    public ResponseEntity deleteUser(@PathVariable String id){
+    public String deleteUser(@PathVariable String id){
+        if (id == null) {
+            return "User id can't be null";
+        }
+        if (id.isEmpty()) {
+            return "User id is empty";
+        }
         return userService.deleteUser(id);
     }
 
