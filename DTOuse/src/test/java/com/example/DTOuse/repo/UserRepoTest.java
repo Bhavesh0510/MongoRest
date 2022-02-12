@@ -14,6 +14,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -65,12 +66,15 @@ class UserRepoTest {
 
     @Test
     public void getAllUsersLocationTest() {
-        when(userController.getAllUsersLocation()).thenReturn(
+        when(userService.getAllUserLocation()).thenReturn(
                 Stream.of(new UserLocationDTO("61f4e6e0388dc90ebe22b8c0", "ramesh@gmail.com", "Banglore", 12.7, 89.6),
                         new UserLocationDTO("2", "jay@gmail.com", "Mumbai", 67.9, 12.9)).collect(Collectors.toList()));
-        assertEquals(2, userController.getAllUsersLocation().size());
-        assertEquals("61f4e6e0388dc90ebe22b8c0", userController.getAllUsersLocation().get(0).getUserId());
-        assertEquals("Mumbai", userController.getAllUsersLocation().get(1).getPlace());
+        List<UserLocationDTO> users = userController.getAllUsersLocation();
+        assertEquals(2, users.size());
+        assertEquals("61f4e6e0388dc90ebe22b8c0", users.get(0).getUserId());
+        assertEquals("Mumbai", users.get(1).getPlace());
+        assertEquals(12.9, users.get(1).getLatitude(),0.0);
+        assertEquals(12.7, users.get(0).getLongitude(),0.0);
     }
 
     @Test
